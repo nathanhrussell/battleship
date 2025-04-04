@@ -1,0 +1,52 @@
+import Ship from "./ship";
+
+const Gameboard = () => {
+    const ships = [];
+    const misses = [];
+    const grid = {};
+
+    const coordToKey = ([x,y]) => `${x},${y}`;
+
+    const placeShip = (ship, startCoord, direction) => {
+        const [x, y] = startCoord;
+        const coords = [];
+
+        for (let i = 0; i < ship.length; i++) {
+            const coord = direction === "horizontal" ? [x + i, y] : [x, y + i];
+            grid[coordToKey(coord)] = ship;
+            coords.push(coord);
+        }
+
+        ships.push({ ship, coords, });
+    }
+
+        const getShipAt = (coord) => {
+            return grid[coordToKey(coord)] || null;
+        }
+
+        const receiveAttack = (coord) => {
+            const key = coordToKey(coord);
+            const ship = grid[key];
+
+        if (ship) {
+            ship.hit();
+        } else {
+            misses.push(coord);
+        }
+    };
+
+    const getMisses = () => misses;
+
+    const areAllShipsSunk = () =>
+        ships.every(({ ship }) => ship.isSunk());
+
+    return {
+        placeShip,
+        receiveAttack,
+        getShipAt,
+        getMisses,
+        areAllShipsSunk,
+    };
+};
+
+export default Gameboard;
