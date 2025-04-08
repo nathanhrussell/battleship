@@ -1,6 +1,6 @@
-import Player from "./player";
-import Gameboard from "./gameboard";
-import Ship from "./ship";
+import Player from "./player.js";
+import Gameboard from "./gameboard.js";
+import Ship from "./ship.js";
 
 const Game = (() => {
   const human = Player();
@@ -142,6 +142,16 @@ const Game = (() => {
   const playerBoardEl = document.querySelector("#player-board");
   const enemyBoardEl = document.querySelector("#enemy-board");
   const startBtn = document.querySelector("#start-game");
+  const placeRandomBtn = document.querySelector("#place-random");
+  const messageEl = document.querySelector("#message");
+
+  placeRandomBtn.addEventListener("click", () => {
+    human.board = Gameboard();
+    placeShipsRandomly(human.board);
+    createGrid(playerBoardEl, human.board);
+    renderBoard(human.board, playerBoardEl);
+    messageEl.textContent = "Ships placed! You can now start the game.";
+  });
 
   startBtn.addEventListener("click", () => {
     gameOver = false;
