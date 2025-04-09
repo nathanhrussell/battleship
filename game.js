@@ -33,6 +33,14 @@ const Game = (() => {
   };
 
   const handlePlayerAttack = (coord) => {
+    const alreadyAttacked = playerAttacks.some(
+      ([px, py]) => px === coord[0] && py === coord[1]
+    );
+
+    if(alreadyAttacked || gameOver) return;
+
+    playerAttacks.push(coord);
+
     if (gameOver) return;
 
     computer.board.receiveAttack(coord);
@@ -137,6 +145,7 @@ const Game = (() => {
 
   let gameOver = false;
   const computerAttacks = [];
+  const playerAttacks = [];
 
   // DOM elements (very basic setup)
   const playerBoardEl = document.querySelector("#player-board");
