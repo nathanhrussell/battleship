@@ -33,18 +33,17 @@ const Game = (() => {
   };
 
   const handlePlayerAttack = (coord) => {
-    const alreadyAttacked = playerAttacks.some(
-      ([px, py]) => px === coord[0] && py === coord[1]
-    );
-
-    if(alreadyAttacked || gameOver) return;
-
-    playerAttacks.push(coord);
 
     if (gameOver) return;
 
-    computer.board.receiveAttack(coord);
+    messageEl.textContent = "";
+
+    const result = computer.board.receiveAttack(coord);
     renderBoard(computer.board, enemyBoardEl, true);
+
+    if(result.sunk) {
+      messageEl.textContent = "You sunk a ship!";
+    }
 
     if (computer.board.areAllShipsSunk()) {
       alert("You win!");

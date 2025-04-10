@@ -31,8 +31,10 @@ const Gameboard = () => {
 
         if (ship) {
             ship.hit(coord);
+            return { hit: true, sunk: ship.isSunk() };
         } else {
             misses.push(coord);
+            return { hit: false, sunk: false };
         }
     };
 
