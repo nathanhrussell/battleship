@@ -2,6 +2,7 @@ import Player from "./player.js";
 import Gameboard from "./gameboard.js";
 import Ship from "./ship.js";
 
+
 const Game = (() => {
   const human = Player();
   const computer = Player();
@@ -135,14 +136,23 @@ const Game = (() => {
   };
 
   const startGame = () => {
+    if (!playerShipsPlaced) {
+      messageEl.textContent = "Please place your ships first.";
+      return;
+    }
+
     placeShipsRandomly(human.board);
     placeShipsRandomly(computer.board);
     createGrid(playerBoardEl, human.board);
     createGrid(enemyBoardEl, computer.board, true);
     renderBoard(human.board, playerBoardEl);
+
+    placeRandomBtn.disabled = true;
+    startBtn.disabled = true;
   };
 
   let gameOver = false;
+  let playerShipsPlaced = false;
   const computerAttacks = [];
   const playerAttacks = [];
 
@@ -159,6 +169,7 @@ const Game = (() => {
     createGrid(playerBoardEl, human.board);
     renderBoard(human.board, playerBoardEl);
     messageEl.textContent = "Ships placed! You can now start the game.";
+    playerShipsPlaced = true;
   });
 
   startBtn.addEventListener("click", () => {
