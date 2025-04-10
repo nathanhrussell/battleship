@@ -127,11 +127,11 @@ const Game = (() => {
         cell.classList.add("ship");
       }
 
-      if (ship && ship.hits > 0) {
+      if (ship && ship.hitPositions.some(([hx, hy]) => hx === x && hy === y)) {
         cell.classList.add("hit");
       } else if (board.getMisses().some(([mx, my]) => mx === x && my === y)) {
         cell.classList.add("miss");
-      }
+      }      
     });
   };
 

@@ -17,8 +17,9 @@ const Gameboard = () => {
             coords.push(coord);
         }
 
+        ship.setPositions(coords);
         ships.push({ ship, coords, });
-    }
+    };
 
         const getShipAt = (coord) => {
             return grid[coordToKey(coord)] || null;
@@ -29,7 +30,7 @@ const Gameboard = () => {
             const ship = grid[key];
 
         if (ship) {
-            ship.hit();
+            ship.hit(coord);
         } else {
             misses.push(coord);
         }
